@@ -1,17 +1,32 @@
 const Chat = require('../models/chat');
 const User = require('../models/user');
+const { validationResult } = require('express-validator/check');
 
 // function for creating the group
 exports.createGroup = async (req,res,next) => {
+   const errors = validationResult(req);
+   if(!errors.isEmpty()) {
+      const error = new Error('Validation failed,entered data is incorrect');
+      error.statusCode = 422;
+      return next(error);
+   }
     const name = req.body.name;
     const description = req.body.description;
-    const imageUrl = req.body.imageUrl; 
+    let imageUrl = req.body.image;
+    if (req.file) {
+      imageUrl = req.file.path.replace(/\\/g ,"/");
+    }else {
+      imageUrl = ""
+    }
     try {
      const group = new Chat({ name : name,description:description,imageUrl:imageUrl});
+     group.users.push(req.userId);
+     group.admins.push(req.userId);
      await group.save();
      res.status(200).json({
          name:name,
-         message:"Group Created Succesfully" 
+         message:"Group Created Succesfully",
+         group:group 
      })
     }catch (err) {
         if (!err.statusCode) {

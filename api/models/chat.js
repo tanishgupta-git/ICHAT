@@ -14,17 +14,17 @@ const chatSchema = Schema({
    type : Schema.Types.String,
    default : ""
   },
+  admins : [
+   {
+     type:Schema.Types.ObjectId,
+     ref : 'User'
+   }
+  ],
   users : 
       [
         {
-          user : {
-         type:Schema.Types.ObjectId,
+        type:Schema.Types.ObjectId,
          ref : 'User'
-        },
-        isAdmin : {
-          type : Schema.Types.Boolean,
-          default : false
-        }
         }
       ]
    , messages : 

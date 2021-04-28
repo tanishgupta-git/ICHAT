@@ -2,6 +2,7 @@ import React,{useState,useEffect,useCallback} from 'react';
 import { withRouter } from 'react-router-dom';
 import './App.css';
 import HomePage from './pages/homepage/homepage';
+import SignInAndUp from './pages/signInandUp/signInandUp';
 
 function App({history}) {
   const [user,Setuser] = useState({token:"",userId:""});
@@ -37,10 +38,10 @@ function App({history}) {
     <div className="App">
     {loading ? 
       "Loading..."
-      : <HomePage Setuser={Setuser}/>
+      : ( user.token ? 
+      (<HomePage user={user} Setuser={Setuser} />) : ( <SignInAndUp Setuser={Setuser}/>)
+        )
     }
-
-    { user.token && <button onClick={logoutHandler}>Logout</button>}
     </div>
   );
 }

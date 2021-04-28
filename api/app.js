@@ -5,6 +5,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const MONGODB_URI = process.env.MONGODB_URI
 const authRoutes = require('./routes/auth');
+const chatRoutes = require('./routes/chat');
 app.use(bodyParser.json({ limit: "50mb" }))
 
 app.use((req, res, next) => {
@@ -18,6 +19,7 @@ app.use((req, res, next) => {
   });
 
 app.use('/auth',authRoutes);
+app.use('/chat',chatRoutes);
 app.use((error,req,res,next) => {
     console.log(error);
     const status = error.statusCode || 500;
