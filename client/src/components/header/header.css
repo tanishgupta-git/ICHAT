@@ -1,3 +1,18 @@
 .header {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.header__logo {
+    margin: 0;
+}
+button.header__listitem {
+    background-color: transparent;
+    all : unset;   
+}
+.header__listitem {
+    margin: 0 15px;
+    cursor: pointer;
 }

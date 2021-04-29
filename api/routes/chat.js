@@ -31,5 +31,5 @@ router.post('/create-group'
        body('description').trim()], 
        chatController.createGroup);
 
-       
+router.get('/getJoinedgroups',isAuth,chatController.getJoinedGroups);       
 module.exports = router;

@@ -1,6 +1,6 @@
 import React from 'react';
 import './header.css';
-import { withRouter} from 'react-router-dom';
+import { Link, withRouter} from 'react-router-dom';
 
 const Header = ({Setuser,history}) => {
    const logoutHandler = () => {
@@ -12,10 +12,11 @@ const Header = ({Setuser,history}) => {
    }
     return (
         <div className="header">
-          <h1>ICHAT</h1>
-          <span>
-            <button onClick={logoutHandler}>Logout</button>
-          </span>
+          <Link to='/'><h1 className='header__logo'>ICHAT</h1></Link>
+          <div>
+            <Link to='/create-group' className='header__listitem'>Create Group</Link>
+            <button onClick={logoutHandler} className='header__listitem'>Logout</button>
+          </div>
         </div>
     )
 }
