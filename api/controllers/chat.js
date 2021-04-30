@@ -77,3 +77,43 @@ exports.getJoinedGroups = async (req,res,next) => {
   }
   
 }
+
+// funtion for getting groups that need to explored
+exports.getExploreGroups = async (req,res,next) => {
+  try {
+    const user = await User.findById(req.userId).populate('chats');
+    const groups = await Chat.find();
+    let userGroups = user.chats.map( chat => chat.name);
+    const exploreGroups = groups.filter( group => (userGroups.indexOf(group.name) === -1) )
+    res.status(200).json({ groups : exploreGroups});
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);    
+  }
+}
+
+// function for joining the group
+exports.joinGroup = async (req,res,next) => {
+  const grpId = req.params.grpId;
+  try {
+   const user = await  User.findById(req.userId);
+   const group = await Chat.findById(grpId);
+   if (!group) {
+    const error = new Error('No Group found.');
+    error.statusCode = 422;
+    return next(error); 
+  }
+  group.users.push(user);
+  await group.save();
+  user.chats.push(group);
+  await user.save();
+  res.status(200).json({ message : "Group Joined Successfully"});
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);    
+  }
+}

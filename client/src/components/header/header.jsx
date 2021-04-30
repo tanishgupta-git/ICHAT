@@ -15,6 +15,7 @@ const Header = ({Setuser,history}) => {
           <Link to='/'><h1 className='header__logo'>ICHAT</h1></Link>
           <div>
             <Link to='/create-group' className='header__listitem'>Create Group</Link>
+            <Link to='/explore-groups' className="header__listitem">Explore Groups</Link>
             <button onClick={logoutHandler} className='header__listitem'>Logout</button>
           </div>
         </div>

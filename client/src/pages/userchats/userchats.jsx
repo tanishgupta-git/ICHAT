@@ -5,7 +5,7 @@ import './userchats.css'
 
 const UserChats = ({user}) => {
     return (
-        <div>
+        <div className="userChats" >
            <JoinedGroup user={user}/>
            <GroupChat />
         </div>

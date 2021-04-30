@@ -31,5 +31,7 @@ router.post('/create-group'
        body('description').trim()], 
        chatController.createGroup);
 
-router.get('/getJoinedgroups',isAuth,chatController.getJoinedGroups);       
+router.get('/getJoinedgroups',isAuth,chatController.getJoinedGroups); 
+router.get('/getExploregroups',isAuth,chatController.getExploreGroups);
+router.post('/joingroup/:grpId',isAuth,chatController.joinGroup);      
 module.exports = router;

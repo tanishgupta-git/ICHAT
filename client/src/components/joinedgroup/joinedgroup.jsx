@@ -22,7 +22,7 @@ const JoinedGroup = ({user}) => {
     return (
         <div>
             {
-                groups.map(group => <span key={group._id} >{group.name}</span> )
+                groups.map(group => <div key={group._id} >{group.name}</div> )
             }
         </div>
     )
