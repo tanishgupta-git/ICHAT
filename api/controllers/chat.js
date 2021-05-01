@@ -117,3 +117,26 @@ exports.joinGroup = async (req,res,next) => {
     next(err);    
   }
 }
+
+// function for addign the messages
+exports.addMessage = async (req,res,next) => {
+  const errors = validationResult(req);
+  if(!errors.isEmpty()) {
+     const error = new Error('Validation failed,entered data is incorrect');
+     error.statusCode = 422;
+     return next(error);
+  }
+  const grpId = req.params.grpId;
+  const message  = req.body.message;
+  try {
+    const chat =await Chat.findById(grpId);
+    chat.messages.push({ userId:req.userId,message:message});
+    await chat.save();
+    res.json({ message:"Added Successfully"});
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);    
+  }
+}

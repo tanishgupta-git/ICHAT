@@ -1,8 +1,9 @@
 import React,{useState,useEffect} from 'react';
 import './joinedgroup.css';
 
-const JoinedGroup = ({user}) => {
+const JoinedGroup = ({user,SetchatId}) => {
     const [groups,Setgroups] = useState([]);
+
     useEffect(() => {
       fetch('http://localhost:5000/chat/getJoinedgroups',{
         method : 'GET',
@@ -22,7 +23,7 @@ const JoinedGroup = ({user}) => {
     return (
         <div>
             {
-                groups.map(group => <div key={group._id} >{group.name}</div> )
+                groups.map(group => <div key={group._id} onClick={ () => SetchatId(group._id)} >{group.name}</div> )
             }
         </div>
     )

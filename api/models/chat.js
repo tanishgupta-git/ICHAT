@@ -30,8 +30,11 @@ const chatSchema = Schema({
    , messages : 
       [
           {   
-              username :"",
-              msg : ""
+              userId :{
+                type:Schema.Types.ObjectId,
+                ref : 'User'
+              },
+              message : Schema.Types.String
           }
       ]
 

@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const MONGODB_URI = process.env.MONGODB_URI
 const authRoutes = require('./routes/auth');
 const chatRoutes = require('./routes/chat');
-app.use(bodyParser.json({ limit: "50mb" }))
+app.use(bodyParser.json())
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
