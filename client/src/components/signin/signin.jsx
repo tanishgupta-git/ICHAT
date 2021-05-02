@@ -17,8 +17,9 @@ const Signin = ({Setsignup,Setuser}) => {
             }
         }).then(res => res.json())
         .then( resData => {
+            console.log(resData);
             localStorage.setItem('ichatApptoken', resData.token);
-            localStorage.setItem('ichatAppuserId', resData.userId);
+            localStorage.setItem('ichatAppusername', resData.username);
             const remainingMilliseconds = 60 * 60 * 1000;
             const expiryDate = new Date(
               new Date().getTime() + remainingMilliseconds

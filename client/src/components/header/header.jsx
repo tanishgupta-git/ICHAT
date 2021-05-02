@@ -7,7 +7,7 @@ const Header = ({Setuser,history}) => {
     Setuser({token: null});
     localStorage.removeItem('ichatApptoken');
     localStorage.removeItem('ichatAppexpiryDate');
-    localStorage.removeItem('ichatAppuserId');
+    localStorage.removeItem('ichatAppusername');
     history.push('/')
    }
     return (

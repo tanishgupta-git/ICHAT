@@ -19,10 +19,10 @@ exports.createGroup = async (req,res,next) => {
       imageUrl = ""
     }
     try {
-     const user = await User.findById(req.userId);
+     const user = await User.findOne({username:req.username});
      const group = new Chat({ name : name,description:description,imageUrl:imageUrl});
-     group.users.push(req.userId);
-     group.admins.push(req.userId);
+     group.users.push(req.username);
+     group.admins.push(req.username);
      await group.save();
      user.chats.push(group);
      await user.save();
@@ -49,7 +49,7 @@ exports.joingroup = async (req,res,next) => {
       error.statusCode = 422;
       return next(error); 
     }
-   const user = await User.findById(req.userId);
+   const user = await User.findOne({username:req.username});
    user.chats.push(group);
    await user.save();
    res.status(200).json({
@@ -66,8 +66,7 @@ exports.joingroup = async (req,res,next) => {
 // function for getting all groups joined by the user
 exports.getJoinedGroups = async (req,res,next) => {
   try{
-   const user =await User.findById(req.userId).populate('chats');
-   
+   const user =await User.findOne({username:req.username}).populate('chats');
    res.status(200).json({ chats : user.chats})
   } catch (err) {
     if (!err.statusCode) {
@@ -81,7 +80,7 @@ exports.getJoinedGroups = async (req,res,next) => {
 // funtion for getting groups that need to explored
 exports.getExploreGroups = async (req,res,next) => {
   try {
-    const user = await User.findById(req.userId).populate('chats');
+    const user = await User.findOne({username:req.username}).populate('chats');
     const groups = await Chat.find();
     let userGroups = user.chats.map( chat => chat.name);
     const exploreGroups = groups.filter( group => (userGroups.indexOf(group.name) === -1) )
@@ -98,7 +97,7 @@ exports.getExploreGroups = async (req,res,next) => {
 exports.joinGroup = async (req,res,next) => {
   const grpId = req.params.grpId;
   try {
-   const user = await  User.findById(req.userId);
+   const user = await  User.findOne({username:req.username});
    const group = await Chat.findById(grpId);
    if (!group) {
     const error = new Error('No Group found.');
@@ -118,7 +117,7 @@ exports.joinGroup = async (req,res,next) => {
   }
 }
 
-// function for addign the messages
+// function for adding the messages
 exports.addMessage = async (req,res,next) => {
   const errors = validationResult(req);
   if(!errors.isEmpty()) {
@@ -129,8 +128,9 @@ exports.addMessage = async (req,res,next) => {
   const grpId = req.params.grpId;
   const message  = req.body.message;
   try {
+    const user = await User.findOne({username:req.username}); 
     const chat =await Chat.findById(grpId);
-    chat.messages.push({ userId:req.userId,message:message});
+    chat.messages.push({ username:user.username,message:message});
     await chat.save();
     res.json({ message:"Added Successfully"});
   } catch (err) {
@@ -139,4 +139,19 @@ exports.addMessage = async (req,res,next) => {
     }
     next(err);    
   }
+}
+
+// function for getting the messages of a group
+exports.getGroupMessages = async (req,res,next) => {
+  const grpId = req.params.grpId;
+  try {
+   const chat = await Chat.findById(grpId);
+   res.status(200).json({ messages : chat.messages })
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);    
+  }
+
 }

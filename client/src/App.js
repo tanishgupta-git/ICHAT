@@ -5,14 +5,14 @@ import HomePage from './pages/homepage/homepage';
 import SignInAndUp from './pages/signInandUp/signInandUp';
 
 function App({history}) {
-  const [user,Setuser] = useState({token:"",userId:""});
+  const [user,Setuser] = useState({token:"",username:""});
   const [loading,Setloading] = useState(true);
 
   const logoutHandler = useCallback(() => {
     Setuser({token: null});
     localStorage.removeItem('ichatApptoken');
     localStorage.removeItem('ichatAppexpiryDate');
-    localStorage.removeItem('ichatAppuserId');
+    localStorage.removeItem('ichatAppusername');
     history.push('/')
   },[history])
 
@@ -29,8 +29,8 @@ function App({history}) {
       Setloading(false);
       return;
     }
-    const userId = localStorage.getItem('ichatAppuserId');
-    Setuser({userId : userId,token : token}); 
+    const username = localStorage.getItem('ichatAppusername');
+    Setuser({username : username,token : token}); 
     Setloading(false);
   },[logoutHandler])
 

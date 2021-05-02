@@ -16,23 +16,24 @@ const chatSchema = Schema({
   },
   admins : [
    {
-     type:Schema.Types.ObjectId,
-     ref : 'User'
+     type:Schema.Types.String,
+     require:true
    }
   ],
   users : 
       [
         {
-        type:Schema.Types.ObjectId,
-         ref : 'User'
+        type:Schema.Types.String,
+        require:true
         }
       ]
    , messages : 
       [
           {   
-              userId :{
-                type:Schema.Types.ObjectId,
-                ref : 'User'
+    
+              username :{
+                type:Schema.Types.String,
+                require:true
               },
               message : Schema.Types.String
           }
