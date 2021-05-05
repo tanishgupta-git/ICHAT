@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import './creategroup.css';
 
-const CreateGroup = ({user}) => {
+const CreateGroup = ({history,user}) => {
     const [name,Setname] = useState("");
     const [description,Setdescription] = useState("");
     const [image,Setimage] = useState("");
@@ -41,7 +41,7 @@ const CreateGroup = ({user}) => {
          return res.json()
         })
         .then( resData => {
-            console.log(resData);
+           history.push('/');
         })
         .catch( err => {
           console.log(err);

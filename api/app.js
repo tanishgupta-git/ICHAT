@@ -1,5 +1,6 @@
 require('dotenv').config();
 var express = require('express');
+const path = require('path');
 const moongoose = require('mongoose');
 const app = express();
 const bodyParser = require('body-parser');
@@ -7,7 +8,7 @@ const MONGODB_URI = process.env.MONGODB_URI
 const authRoutes = require('./routes/auth');
 const chatRoutes = require('./routes/chat');
 app.use(bodyParser.json())
-
+app.use('/images/group',express.static(path.join(__dirname,'images/group')));
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader(

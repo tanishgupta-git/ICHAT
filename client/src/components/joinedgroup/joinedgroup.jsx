@@ -21,9 +21,13 @@ const JoinedGroup = ({user,SetchatId}) => {
       })
     },[user.token])
     return (
-        <div>
+        <div className='joinedgroup'>
             {
-                groups.map(group => <div key={group._id} onClick={ () => SetchatId(group._id)} >{group.name}</div> )
+                groups.map(group => 
+                <div className='joinedgroup__group' key={group._id} onClick={ () => SetchatId(group._id)} >
+                  <img src={`http://localhost:5000/${group.imageUrl}`} alt="" />
+                  <span>{group.name}</span>
+                </div> )
             }
         </div>
     )

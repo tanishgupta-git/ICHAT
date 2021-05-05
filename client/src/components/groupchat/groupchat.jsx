@@ -47,12 +47,26 @@ const GroupChat = ({chatId,user}) => {
         {chatId ? 
           <div>
           {
-              messages.map(message => (
-                  <div key={message._id}>
+              messages.map(
+                message => 
+                  (
+                    message.username !== user.username ? 
+                    (
+                <div key={message._id} className='groupchat__msg' >
                       <h5>{message.username}</h5>
                       <p>{message.message}</p>
                   </div>
-              ))
+                     ):
+                 (
+                        <div key={message._id} className='groupchat__msg groupchat__msg--self'>
+                       
+                         <p>{message.message}</p>
+                          </div>
+                )
+        
+                  )
+        
+              )
           }
           <form onSubmit={handleSubmit}>
               <input type="text" value={message} onChange={ (e) => Setmessage(e.target.value)} required />
@@ -60,7 +74,9 @@ const GroupChat = ({chatId,user}) => {
           </form>
           </div>
           :
-          <p>Hello from groupchat</p>
+         <div>
+             <p>Hello from groupchat</p>
+         </div>
         }
         </div>
     )

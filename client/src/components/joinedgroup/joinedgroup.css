@@ -1,0 +1,15 @@
+.joinedgroup__group {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.joinedgroup__group img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.joinedgroup__group span {
+    margin-left: 15px;
+    font-size: 1.3rem;
+}
