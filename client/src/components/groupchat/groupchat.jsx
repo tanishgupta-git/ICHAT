@@ -58,9 +58,10 @@ const GroupChat = ({chatId,user}) => {
                   </div>
                      ):
                  (
-                        <div key={message._id} className='groupchat__msg groupchat__msg--self'>
-                       
-                         <p>{message.message}</p>
+                        <div key={message._id} className='groupchat__msgselfParent'>
+                         <div className='groupchat__msg groupchat__msg--self'>    
+                            <p>{message.message}</p>
+                          </div> 
                           </div>
                 )
         

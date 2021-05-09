@@ -77,7 +77,7 @@ exports.getJoinedGroups = async (req,res,next) => {
   
 }
 
-// funtion for getting groups that need to explored
+// funtion for getting groups that need to explored 
 exports.getExploreGroups = async (req,res,next) => {
   try {
     const user = await User.findOne({username:req.username}).populate('chats');

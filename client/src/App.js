@@ -1,6 +1,7 @@
 import React,{useState,useEffect,useCallback} from 'react';
 import { withRouter } from 'react-router-dom';
 import './App.css';
+import openSocket from 'socket.io-client';
 import HomePage from './pages/homepage/homepage';
 import SignInAndUp from './pages/signInandUp/signInandUp';
 
@@ -32,6 +33,7 @@ function App({history}) {
     const username = localStorage.getItem('ichatAppusername');
     Setuser({username : username,token : token}); 
     Setloading(false);
+    openSocket('http://localhost:5000');
   },[logoutHandler])
 
   return (
