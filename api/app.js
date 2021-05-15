@@ -1,14 +1,9 @@
 require('dotenv').config();
 var express = require('express');
-const path = require('path');
-const moongoose = require('mongoose');
 const app = express();
 const bodyParser = require('body-parser');
-const MONGODB_URI = process.env.MONGODB_URI
-const authRoutes = require('./routes/auth');
-const chatRoutes = require('./routes/chat');
+const PORT = 5000 || process.env.PORT;
 app.use(bodyParser.json())
-app.use('/images/group',express.static(path.join(__dirname,'images/group')));
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader(
@@ -19,8 +14,6 @@ app.use((req, res, next) => {
     next();
   });
 
-app.use('/auth',authRoutes);
-app.use('/chat',chatRoutes);
 app.use((error,req,res,next) => {
     console.log(error);
     const status = error.statusCode || 500;
@@ -29,16 +22,8 @@ app.use((error,req,res,next) => {
     res.status(status).json({ message : message,data : data});  
   })
 
-moongoose.connect(MONGODB_URI)
-.then( result => {
-  const server = app.listen(5000,() => {
-    console.log("server started");
-})
+const server = app.listen(PORT,() => {console.log("server started");})
 const io = require('./socket').init(server);
 io.on('connection',socket => {
   console.log("Client Connected");
 });
-})
-.catch(err => {
-    console.log(err)
-})
