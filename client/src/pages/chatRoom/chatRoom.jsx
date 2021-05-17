@@ -1,15 +1,23 @@
 import React,{useEffect, useState} from 'react';
 
-const ChatRoom = ({socket}) => {
+const ChatRoom = ({history,socket,username}) => {
     const [message,Setmessage] = useState("");
     const [allChats,Setallchats] = useState([]);
+    const [users,Setusers] = useState([]);
     useEffect(() => {
      if (socket) {
+      if(!username) {
+        history.push('/')
+        return;
+      }
       socket.on('newmessage',function(data){
         Setallchats(prevchats => ([...prevchats,data]))
       })
+      socket.on('users',function(data){
+        Setusers(data);
+      })
     }
-    },[socket])
+    },[socket,username,history])
     const handleSubmit = (e) => {
         e.preventDefault();
         socket.emit('addchat',{message:message});
@@ -17,9 +25,15 @@ const ChatRoom = ({socket}) => {
     }
     return (
         <div className='row'>
-            <div className='col-3'>
-              <h1>Users in the list</h1>
-               
+            <div className='col-3 bg-dark h-100'>
+              <p className='text-light'>Users in the list</p>
+               {
+                 users.map( user => (
+                   <div key={Math.random()}>
+                    {user}
+                   </div>
+                 ))
+               }
             </div>
             <div className='col-9'>
             {

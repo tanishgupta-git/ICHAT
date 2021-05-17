@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const Header = () => {
   return (
     <Navbar bg="dark" variant="dark">
-      <Navbar.Brand><Link to='/'> ICHAT</Link></Navbar.Brand>
+      <Navbar.Brand><Link to='/' style={{ color:'white',textDecoration:'none'}}> ICHAT</Link></Navbar.Brand>
      </Navbar>
   )
 }

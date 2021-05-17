@@ -14,7 +14,7 @@ io.on('connection',socket => {
     }else{
       socket.username = data.username;
       users.push(data.username);
-      socket.emit('userEnterApproved',{ message:"approved for the room"})
+      socket.emit('userEnterApproved',socket.username)
       updateUsers();
       console.log(socket.id);
     }

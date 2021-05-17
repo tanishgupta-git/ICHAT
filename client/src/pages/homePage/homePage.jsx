@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 const HomePage = ({socket}) => {
     const [username,Setusername] = useState(""); 
     const [validated, setValidated] = useState(false);
+    const [error,Seterror] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -17,14 +18,9 @@ const HomePage = ({socket}) => {
      if (socket) {
       socket.emit('userEnterRoom',{ username:username});
       socket.on('userEnterdenied',function(data){
-        console.log(data);
+           Seterror(data.message);
+     
       });
-      socket.on('users',function(data){
-        console.log(data);
-      });
-      socket.on('userdisconnected',function(data){
-       console.log(data)          
-    })
  }
     }
  
@@ -34,6 +30,7 @@ const HomePage = ({socket}) => {
            <h2 className="text-center mb-5">Welcome To The ICHAT Application</h2>
            <div className='my-5 row justify-content-center'>
             <Form noValidate validated={validated} onSubmit={handleSubmit} className='col-5'>
+            { error && <p className='text-danger'>{error}</p>}
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Username :</Form.Label>
                     <Form.Control type="text" placeholder="Enter Username" value={username} 
