@@ -17,7 +17,6 @@ io.on('connection',socket => {
       users.push(data.username);
       socket.emit('userEnterApproved',socket.username)
       updateUsers();
-      console.log(socket.id);
     }
   })
 
@@ -29,8 +28,12 @@ io.on('connection',socket => {
     console.log(socket.id);
     io.emit('newmessage',{ 'message':data.message,'user':socket.username});
   })
+  socket.on('leaveRoom',function(data){
+    socket.emit('userdisconnect',{'message':'disconnect'});
+    socket.disconnect();
+  })
   socket.on('disconnect',function(){
-
+    if(!socket.username) return;
     users.splice(users.indexOf(socket.username),1);
     updateUsers();
   })

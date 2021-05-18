@@ -31,7 +31,7 @@ const HomePage = ({socket}) => {
        <div className='container my-5 py-5'>
            <h2 className="text-center mb-5">Welcome To The ICHAT Application</h2>
            <div className='my-5 row justify-content-center'>
-            <Form noValidate validated={validated} onSubmit={handleSubmit} className='col-5'>
+            <Form noValidate validated={validated} onSubmit={handleSubmit} className='col-9 col-lg-5'>
             { error && <p className='text-danger'>{error}</p>}
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Username :</Form.Label>

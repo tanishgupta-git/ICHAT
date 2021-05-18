@@ -5,7 +5,7 @@ import ChatRoom from './pages/chatRoom/chatRoom';
 import {useSocket } from './contexts/SocketProvider';
 
 function App({history}) {
-  const socket = useSocket();
+  const {socket} = useSocket();
   const [username,Setusername] = useState();
   useEffect(() => {
 

@@ -3,11 +3,13 @@ import './chatRoom.css';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
+import { useSocket } from '../../contexts/SocketProvider';
 
 const ChatRoom = ({history,socket,username}) => {
     const [message,Setmessage] = useState("");
     const [allChats,Setallchats] = useState([]);
     const [users,Setusers] = useState([]);
+    const { SetleaveRoom } = useSocket();
     useEffect(() => {
      if (socket) {
       if(!username) {
@@ -20,18 +22,27 @@ const ChatRoom = ({history,socket,username}) => {
       socket.on('users',function(data){
         Setusers(data);
       })
+      socket.on('userdisconnect',function(data){
+        SetleaveRoom(true);
+        history.push('/');
+        return;
+      })
     }
-    },[socket,username,history])
+    },[socket,username,history,SetleaveRoom])
     const handleSubmit = (e) => {
         e.preventDefault();
         socket.emit('addchat',{message:message});
         Setmessage("")
+    }
+    const leaveRoom = () => {
+      socket.emit('leaveRoom',{"message":'leave'});
     }
     return (
     <div className='container-fluid h-100'>
         <div className='row h-100'>
             <div className='chatRoom-users col-3 bg-dark h-100'>
             <h2 className='text-white'>ICHAT</h2>
+            <button className='btn btn-secondary' onClick={leaveRoom}>Leave Room</button>
               <h5 className='text-white my-3' style={{fontWeight:'normal'}}>Users in the list</h5>
                {
                  users.map( user => (
