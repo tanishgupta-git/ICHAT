@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Header from './components/Header/Header';
 import HomePage from './pages/homePage/homePage';
 import { Route, Switch,withRouter } from 'react-router-dom';
 import ChatRoom from './pages/chatRoom/chatRoom';
@@ -21,7 +20,6 @@ function App({history}) {
   },[socket,history])
   return (
     <div className="App" style={{ height:'100vh',boxSizing:'border-box'}}>
-     <Header />
      <Switch>
      <Route exact path='/chat' render={(props) => (<ChatRoom {...props} socket={socket} username={username}/>)} />
      <Route path='/' render={(props) => ( <HomePage {...props} socket={socket} username={username}/>)}/>

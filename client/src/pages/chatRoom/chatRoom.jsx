@@ -1,4 +1,8 @@
 import React,{useEffect, useState} from 'react';
+import './chatRoom.css';
+import Button from 'react-bootstrap/Button';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
 
 const ChatRoom = ({history,socket,username}) => {
     const [message,Setmessage] = useState("");
@@ -24,29 +28,60 @@ const ChatRoom = ({history,socket,username}) => {
         Setmessage("")
     }
     return (
-        <div className='row'>
-            <div className='col-3 bg-dark h-100'>
-              <p className='text-light'>Users in the list</p>
+    <div className='container-fluid h-100'>
+        <div className='row h-100'>
+            <div className='chatRoom-users col-3 bg-dark h-100'>
+            <h2 className='text-white'>ICHAT</h2>
+              <h5 className='text-white my-3' style={{fontWeight:'normal'}}>Users in the list</h5>
                {
                  users.map( user => (
-                   <div key={Math.random()}>
-                    {user}
-                   </div>
+                   <p className='text-light' key={Math.random()}>{user}</p>
                  ))
                }
             </div>
-            <div className='col-9'>
+            <div className='chatContainer col-9'>
+            <div className='chats'>
             {
-                allChats.map( chat => <div key={Math.random()}>
-                <p>{chat.user}</p>
-                <p>{chat.message}</p>
-                </div>)
+                allChats.map( chat => 
+            
+              ( chat.user === username ? (
+                <div className='chatMessage chatMessageSelf' key={Math.random()}>
+                  <p>{chat.message}</p>
+                </div>
+                )
+              : (
+                <div className='chatMessage chatMessageOther' key={Math.random()}>
+                  <h6>{chat.user}</h6>
+                  <p>{chat.message}</p>
+                </div>
+                
+                )
+              )
+      )
+
             }
-              <form onSubmit={handleSubmit}>
-                  <input type='text' value={message} onChange={(e) => Setmessage(e.target.value)}/>
-                  <input type='submit' />
+            </div>
+              <form className='chatRoom-form' onSubmit={handleSubmit}>
+              <div className='chatRoom-forminput'>
+                  <InputGroup>
+                  <FormControl
+                    placeholder="Enter Message"
+                    aria-label="Enter Message"
+                    aria-describedby="basic-addon2"
+                    value={message} 
+                    onChange={(e) => Setmessage(e.target.value)}
+                    required
+                  />
+                  <InputGroup.Append>
+                    <Button 
+                    type='submit' 
+                    variant="dark">Send</Button>
+                  </InputGroup.Append>
+                </InputGroup>
+              </div>
               </form>
             </div>
+        </div>
         </div>
     )
 }

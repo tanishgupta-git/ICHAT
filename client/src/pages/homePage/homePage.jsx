@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-
+import Header from '../../components/Header/Header';
 
 const HomePage = ({socket}) => {
     const [username,Setusername] = useState(""); 
@@ -26,6 +26,8 @@ const HomePage = ({socket}) => {
  
 
     return (
+        <>
+        <Header />
        <div className='container my-5 py-5'>
            <h2 className="text-center mb-5">Welcome To The ICHAT Application</h2>
            <div className='my-5 row justify-content-center'>
@@ -41,6 +43,7 @@ const HomePage = ({socket}) => {
             </Form>
             </div>
        </div>
+       </>
     )
 } 
 

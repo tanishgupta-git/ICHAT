@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-const PREFIX = 'ichat-id-'
+const PREFIX = 'ichat-app-'
 
 export default function useLocalStorage(key, initialValue) {
   const prefixedKey = PREFIX + key

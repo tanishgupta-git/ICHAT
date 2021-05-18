@@ -6,6 +6,7 @@ const io = require('./socket').init(server);
 const users = [];
 
 io.on('connection',socket => {
+
   socket.on('userEnterRoom',function(data){
     
     // checking that user already exists or not
@@ -29,6 +30,7 @@ io.on('connection',socket => {
     io.emit('newmessage',{ 'message':data.message,'user':socket.username});
   })
   socket.on('disconnect',function(){
+
     users.splice(users.indexOf(socket.username),1);
     updateUsers();
   })

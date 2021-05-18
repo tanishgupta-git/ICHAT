@@ -1,0 +1,53 @@
+.chatRoom-users {
+    padding: 0;
+}
+.chatContainer {
+    padding:0;
+    position: relative;
+    overflow-y: scroll;
+    height: 100vh;
+}
+.chats {
+    min-height: 93vh;
+    padding: 30px;
+}
+.chatRoom-form {
+    position:sticky;
+    bottom:10px;
+    left:0;
+    width: 90%;
+    margin: 0 auto;
+    z-index: 100;
+}
+.chatRoom-forminput {
+position: relative;
+}
+.chatRoom-forminput input {
+    width: 100%;
+}
+.chatMessage {
+width:fit-content;
+padding:10px;
+border-radius:8px;
+margin:10px;
+min-width:90px;
+position:relative;
+box-sizing: border-box;
+text-align:right;
+}
+.chatMessageSelf {
+    margin-left:auto;
+    background-color:#cccccc;
+    padding-left: 30px;
+}
+.chatMessageOther {
+    border:1px solid #cccccc;
+    text-align: left;
+    padding-right: 30px;
+}
+.chatMessage p{
+    font-size: 1.1em;
+}
+.chatMessageOther h6,p {
+    margin:0;
+}
