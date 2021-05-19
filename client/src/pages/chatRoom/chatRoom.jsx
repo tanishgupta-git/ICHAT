@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from 'react';
+import React,{useEffect, useRef, useState} from 'react';
 import './chatRoom.css';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -10,6 +10,7 @@ const ChatRoom = ({history,socket,username}) => {
     const [allChats,Setallchats] = useState([]);
     const [users,Setusers] = useState([]);
     const { SetleaveRoom } = useSocket();
+    const endOfMessagesRef = useRef(null);
     useEffect(() => {
      if (socket) {
       if(!username) {
@@ -18,6 +19,10 @@ const ChatRoom = ({history,socket,username}) => {
       }
       socket.on('newmessage',function(data){
         Setallchats(prevchats => ([...prevchats,data]))
+        endOfMessagesRef.current.scrollIntoView({
+          behavior : "smooth",
+          block : "start",
+       })
       })
       socket.on('users',function(data){
         Setusers(data);
@@ -71,6 +76,7 @@ const ChatRoom = ({history,socket,username}) => {
       )
 
             }
+            <div className='endofchats' ref={endOfMessagesRef}></div>
             </div>
               <form className='chatRoom-form' onSubmit={handleSubmit}>
               <div className='chatRoom-forminput'>
