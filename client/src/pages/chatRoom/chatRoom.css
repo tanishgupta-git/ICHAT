@@ -37,20 +37,33 @@ text-align:right;
 }
 .chatMessageSelf {
     margin-left:auto;
-    background-color:#cccccc;
+    background-color:#e6e6e6;
     padding-left: 30px;
 }
 .chatMessageOther {
-    border:1px solid #cccccc;
+    border:1px solid #e6e6e6;
     text-align: left;
     padding-right: 30px;
 }
 .chatMessage p{
     font-size: 1.1em;
 }
-.chatMessageOther h6,p {
+.chatMessageOther h6 {
     margin:0;
+}
+.chatMessage p {
+    margin-top:4px;
+    margin-bottom: 16px;
 }
 .endofchats {
  margin-bottom: 30px;
+}
+.chatMessageTime {
+color:#4d4d4d;
+padding:10px;
+font-size:10px;
+position :absolute;
+bottom:0;
+text-align:right;
+right:0;
 }

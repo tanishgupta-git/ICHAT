@@ -4,6 +4,8 @@ import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import { useSocket } from '../../contexts/SocketProvider';
+import moment from 'moment';
+import { v4 as uuidv4 } from 'uuid';
 
 const ChatRoom = ({history,socket,username}) => {
     const [message,Setmessage] = useState("");
@@ -11,6 +13,7 @@ const ChatRoom = ({history,socket,username}) => {
     const [users,Setusers] = useState([]);
     const { SetleaveRoom } = useSocket();
     const endOfMessagesRef = useRef(null);
+
     useEffect(() => {
      if (socket) {
       if(!username) {
@@ -36,7 +39,7 @@ const ChatRoom = ({history,socket,username}) => {
     },[socket,username,history,SetleaveRoom])
     const handleSubmit = (e) => {
         e.preventDefault();
-        socket.emit('addchat',{message:message});
+        socket.emit('addchat',{message:message,time:new Date().getTime(),id:uuidv4()});
         Setmessage("")
     }
     const leaveRoom = () => {
@@ -51,7 +54,7 @@ const ChatRoom = ({history,socket,username}) => {
               <h5 className='text-white my-3' style={{fontWeight:'normal'}}>Users in the list</h5>
                {
                  users.map( user => (
-                   <p className='text-light' key={Math.random()}>{user}</p>
+                   <p className='text-light' key={user.id}>{user.username}</p>
                  ))
                }
             </div>
@@ -61,14 +64,16 @@ const ChatRoom = ({history,socket,username}) => {
                 allChats.map( chat => 
             
               ( chat.user === username ? (
-                <div className='chatMessage chatMessageSelf' key={Math.random()}>
+                <div className='chatMessage chatMessageSelf' key={chat.id}>
                   <p>{chat.message}</p>
+                  <span className='chatMessageTime'>{moment(chat.time).format("LT")}</span>
                 </div>
                 )
               : (
-                <div className='chatMessage chatMessageOther' key={Math.random()}>
+                <div className='chatMessage chatMessageOther' key={chat.id}>
                   <h6>{chat.user}</h6>
                   <p>{chat.message}</p>
+                  <span className='chatMessageTime'>{moment(chat.time).format("LT")}</span>
                 </div>
                 
                 )

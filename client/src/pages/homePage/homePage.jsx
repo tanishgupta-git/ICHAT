@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Header from '../../components/Header/Header';
+import { v4 as uuidv4 } from 'uuid';
 
 const HomePage = ({socket}) => {
     const [username,Setusername] = useState(""); 
@@ -16,7 +17,7 @@ const HomePage = ({socket}) => {
             return 
         }
      if (socket) {
-      socket.emit('userEnterRoom',{ username:username});
+      socket.emit('userEnterRoom',{ username:username,id:uuidv4()});
       socket.on('userEnterdenied',function(data){
            Seterror(data.message);
      
